@@ -111,7 +111,8 @@
   const wrapper = document.querySelector('.game-crop-wrapper');
   if (wrapper.requestFullscreen) wrapper.requestFullscreen();
   else if (wrapper.webkitRequestFullscreen) wrapper.webkitRequestFullscreen();
-    }
+  else if (wrapper.mozRequestFullScreen) wrapper.mozRequestFullScreen();
+}
   </script>
 </body>
 </html>
