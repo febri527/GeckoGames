@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Snake Classic — ARCADEZONE</title>
+  <title>Soccer Bros 2 — GeckoGames</title>
   <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet"/>
   <style>
     :root {
@@ -16,16 +16,13 @@
       --text: #e8e8f0;
       --border: #2a2a3a;
     }
-
     * { margin: 0; padding: 0; box-sizing: border-box; }
-
     body {
       background: var(--bg);
       color: var(--text);
       font-family: 'Space Mono', monospace;
       min-height: 100vh;
     }
-
     body::before {
       content: '';
       position: fixed;
@@ -34,7 +31,6 @@
       pointer-events: none;
       z-index: 1000;
     }
-
     header {
       border-bottom: 2px solid var(--accent);
       padding: 0 2rem;
@@ -44,7 +40,6 @@
       height: 70px;
       background: var(--bg);
     }
-
     .logo {
       font-family: 'Bebas Neue', sans-serif;
       font-size: 2rem;
@@ -54,7 +49,6 @@
       text-shadow: 0 0 20px rgba(240,224,64,0.5);
     }
     .logo span { color: var(--accent2); }
-
     .back-btn {
       color: #8888aa;
       text-decoration: none;
@@ -64,15 +58,12 @@
       transition: color 0.2s;
     }
     .back-btn:hover { color: var(--accent); }
-
-    /* TOP AD */
     .ad-banner {
       background: var(--surface);
       border-bottom: 1px solid var(--border);
       padding: 0.6rem 2rem;
       text-align: center;
     }
-
     .ad-placeholder {
       background: var(--surface);
       border: 1px dashed var(--border);
@@ -85,7 +76,6 @@
       letter-spacing: 2px;
       text-transform: uppercase;
     }
-
     .game-page {
       max-width: 1100px;
       margin: 0 auto;
@@ -94,16 +84,11 @@
       grid-template-columns: 1fr 160px;
       gap: 2rem;
     }
-
     @media (max-width: 768px) {
       .game-page { grid-template-columns: 1fr; }
       .sidebar { display: none; }
     }
-
-    .game-header {
-      margin-bottom: 1rem;
-    }
-
+    .game-header { margin-bottom: 1rem; }
     .game-tag {
       font-size: 0.6rem;
       letter-spacing: 2px;
@@ -111,15 +96,12 @@
       color: var(--accent3);
       margin-bottom: 0.4rem;
     }
-
     .game-title {
       font-family: 'Bebas Neue', sans-serif;
       font-size: 2.5rem;
       letter-spacing: 4px;
       color: var(--text);
     }
-
-    /* GAME IFRAME WRAPPER */
     .game-frame-wrapper {
       width: 100%;
       aspect-ratio: 16/9;
@@ -129,24 +111,14 @@
       overflow: hidden;
       position: relative;
     }
-
     .game-frame-wrapper iframe {
       width: 100%;
       height: 100%;
       border: none;
       display: block;
     }
-
-    /* MIDDLE AD (below game) */
-    .mid-ad {
-      margin: 1.5rem 0;
-      text-align: center;
-    }
-
-    .game-desc-section {
-      margin-top: 1.5rem;
-    }
-
+    .mid-ad { margin: 1.5rem 0; text-align: center; }
+    .game-desc-section { margin-top: 1.5rem; }
     .game-desc-section h2 {
       font-family: 'Bebas Neue', sans-serif;
       font-size: 1.2rem;
@@ -154,13 +126,11 @@
       color: var(--accent);
       margin-bottom: 0.8rem;
     }
-
     .game-desc-section p {
       font-size: 0.7rem;
       color: #8888aa;
       line-height: 1.8;
     }
-
     .controls {
       margin-top: 1rem;
       background: var(--surface);
@@ -168,7 +138,6 @@
       border-radius: 4px;
       padding: 1rem;
     }
-
     .controls h3 {
       font-size: 0.65rem;
       letter-spacing: 3px;
@@ -176,7 +145,6 @@
       color: var(--accent3);
       margin-bottom: 0.8rem;
     }
-
     .control-row {
       display: flex;
       gap: 0.5rem;
@@ -185,7 +153,6 @@
       font-size: 0.65rem;
       color: #8888aa;
     }
-
     .key {
       background: var(--card);
       border: 1px solid var(--border);
@@ -196,14 +163,12 @@
       min-width: 32px;
       text-align: center;
     }
-
     .sidebar {
       display: flex;
       flex-direction: column;
       gap: 1rem;
       padding-top: 4rem;
     }
-
     footer {
       border-top: 1px solid var(--border);
       padding: 2rem;
@@ -218,69 +183,55 @@
 </head>
 <body>
 
-  <!-- TOP AD -->
   <div class="ad-banner">
-    <!-- ADSENSE: Replace with your AdSense leaderboard (728x90) code -->
     <div class="ad-placeholder" style="height:90px; max-width:728px; margin:0 auto;">[ AD SPACE — 728×90 ]</div>
   </div>
 
   <header>
-    <a class="logo" href="../../index.html">ARCADE<span>ZONE</span></a>
+    <a class="logo" href="../../index.html">GECKO<span>GAMES</span></a>
     <a class="back-btn" href="../../index.html">← Back to Games</a>
   </header>
 
   <div class="game-page">
     <div>
       <div class="game-header">
-        <div class="game-tag">Arcade</div>
-        <!-- Change this title to match your game -->
-        <div class="game-title">SNAKE CLASSIC</div>
+        <div class="game-tag">Sports</div>
+        <div class="game-title">SOCCER BROS 2</div>
       </div>
 
-      <!-- =============================================
-           GAME IFRAME
-           Replace the src with your game's index.html
-           For Google Drive: use the /preview link
-           For local game: use the path like "game-files/index.html"
-      ================================================ -->
       <div class="game-frame-wrapper">
         <iframe
-          src="game-files/index.html"
+          src="https://soccer-bros-2.io"
           allowfullscreen
-          title="Snake Classic">
+          title="Soccer Bros 2">
         </iframe>
       </div>
 
-      <!-- MID-PAGE AD (below game, high visibility!) -->
       <div class="mid-ad">
-        <!-- ADSENSE: Replace with your AdSense rectangle (336x280) code -->
         <div class="ad-placeholder" style="height:280px; max-width:336px; margin:0 auto;">[ AD SPACE — 336×280 ]</div>
       </div>
 
-      <!-- GAME INFO -->
       <div class="game-desc-section">
         <h2>ABOUT THIS GAME</h2>
-        <!-- Change this description -->
-        <p>Guide the snake to eat food and grow longer. Avoid hitting the walls or your own tail. How long can you survive?</p>
+        <p>Fast-paced 1v1 soccer battle! Pick your character and outscore your opponent before time runs out. Simple controls, intense matches!</p>
 
-        <!-- CONTROLS — edit to match your game -->
         <div class="controls">
           <h3>Controls</h3>
-          <div class="control-row"><span class="key">↑</span><span class="key">↓</span><span class="key">←</span><span class="key">→</span> Move snake</div>
-          <div class="control-row"><span class="key">P</span> Pause</div>
+          <div class="control-row"><span class="key">A</span><span class="key">D</span> Move — Player 1</div>
+          <div class="control-row"><span class="key">W</span> Jump / Shoot — Player 1</div>
+          <div class="control-row"><span class="key">←</span><span class="key">→</span> Move — Player 2</div>
+          <div class="control-row"><span class="key">↑</span> Jump / Shoot — Player 2</div>
         </div>
       </div>
     </div>
 
-    <!-- SIDEBAR ADS -->
     <div class="sidebar">
-      <!-- ADSENSE: Replace with your AdSense vertical (160x600) code -->
       <div class="ad-placeholder" style="width:160px; height:600px;">[ AD<br>160×600 ]</div>
     </div>
   </div>
 
   <footer>
-    <p>© 2025 ARCADEZONE &nbsp;·&nbsp; <a href="#">Privacy Policy</a> &nbsp;·&nbsp; <a href="#">Contact</a></p>
+    <p>© 2025 GECKOGAMES &nbsp;·&nbsp; <a href="#">Privacy Policy</a> &nbsp;·&nbsp; <a href="#">Contact</a></p>
   </footer>
 
 </body>
