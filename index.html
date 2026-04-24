@@ -1,0 +1,447 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>ARCADE ZONE — Free Online Games</title>
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet"/>
+  <style>
+    :root {
+      --bg: #0a0a0f;
+      --surface: #12121a;
+      --card: #1a1a26;
+      --accent: #f0e040;
+      --accent2: #ff3c6e;
+      --accent3: #3cf0c8;
+      --text: #e8e8f0;
+      --muted: #6666888;
+      --border: #2a2a3a;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Space Mono', monospace;
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    /* Scanline overlay */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background: repeating-linear-gradient(
+        0deg,
+        transparent,
+        transparent 2px,
+        rgba(0,0,0,0.08) 2px,
+        rgba(0,0,0,0.08) 4px
+      );
+      pointer-events: none;
+      z-index: 1000;
+    }
+
+    /* ── HEADER ── */
+    header {
+      border-bottom: 2px solid var(--accent);
+      padding: 0 2rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 70px;
+      position: sticky;
+      top: 0;
+      background: var(--bg);
+      z-index: 100;
+    }
+
+    .logo {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 2rem;
+      letter-spacing: 4px;
+      color: var(--accent);
+      text-shadow: 0 0 20px rgba(240,224,64,0.5);
+    }
+
+    .logo span { color: var(--accent2); }
+
+    nav a {
+      color: var(--text);
+      text-decoration: none;
+      font-size: 0.7rem;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      margin-left: 2rem;
+      transition: color 0.2s;
+    }
+    nav a:hover { color: var(--accent); }
+
+    /* ── AD BANNER (top) ── */
+    .ad-banner {
+      background: var(--surface);
+      border-bottom: 1px solid var(--border);
+      padding: 0.6rem 2rem;
+      text-align: center;
+      font-size: 0.65rem;
+      color: #555577;
+      letter-spacing: 1px;
+    }
+
+    .ad-placeholder {
+      background: var(--surface);
+      border: 1px dashed var(--border);
+      border-radius: 4px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #444466;
+      font-size: 0.65rem;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+    }
+
+    /* ── HERO ── */
+    .hero {
+      padding: 4rem 2rem 3rem;
+      text-align: center;
+      position: relative;
+    }
+
+    .hero-label {
+      font-size: 0.65rem;
+      letter-spacing: 4px;
+      color: var(--accent3);
+      text-transform: uppercase;
+      margin-bottom: 1rem;
+    }
+
+    .hero h1 {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: clamp(3rem, 10vw, 7rem);
+      letter-spacing: 8px;
+      line-height: 1;
+      color: var(--text);
+      text-shadow: 4px 4px 0 var(--accent2), 8px 8px 0 rgba(255,60,110,0.2);
+      animation: glitch 6s infinite;
+    }
+
+    @keyframes glitch {
+      0%, 92%, 100% { text-shadow: 4px 4px 0 var(--accent2), 8px 8px 0 rgba(255,60,110,0.2); }
+      93% { text-shadow: -4px 4px 0 var(--accent3), 4px -4px 0 var(--accent2); transform: translateX(2px); }
+      94% { text-shadow: 4px -4px 0 var(--accent2), -4px 4px 0 var(--accent3); transform: translateX(-2px); }
+      95% { text-shadow: 4px 4px 0 var(--accent2); transform: translateX(0); }
+    }
+
+    .hero p {
+      margin-top: 1.5rem;
+      color: #8888aa;
+      font-size: 0.75rem;
+      letter-spacing: 2px;
+    }
+
+    /* ── CATEGORY FILTERS ── */
+    .filters {
+      display: flex;
+      gap: 0.5rem;
+      padding: 0 2rem 2rem;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+
+    .filter-btn {
+      background: transparent;
+      border: 1px solid var(--border);
+      color: #8888aa;
+      padding: 0.4rem 1rem;
+      font-family: 'Space Mono', monospace;
+      font-size: 0.65rem;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      cursor: pointer;
+      transition: all 0.2s;
+      border-radius: 2px;
+    }
+
+    .filter-btn:hover, .filter-btn.active {
+      background: var(--accent);
+      color: var(--bg);
+      border-color: var(--accent);
+    }
+
+    /* ── MAIN LAYOUT ── */
+    .main-layout {
+      display: grid;
+      grid-template-columns: 1fr 160px;
+      gap: 2rem;
+      padding: 0 2rem 4rem;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    @media (max-width: 768px) {
+      .main-layout { grid-template-columns: 1fr; }
+      .sidebar { display: none; }
+    }
+
+    /* ── GAMES GRID ── */
+    .games-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+      gap: 1.5rem;
+    }
+
+    .game-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      overflow: hidden;
+      cursor: pointer;
+      transition: transform 0.2s, border-color 0.2s, box-shadow 0.2s;
+      text-decoration: none;
+      display: block;
+    }
+
+    .game-card:hover {
+      transform: translateY(-4px);
+      border-color: var(--accent);
+      box-shadow: 0 8px 30px rgba(240,224,64,0.15);
+    }
+
+    .game-thumb {
+      width: 100%;
+      aspect-ratio: 16/9;
+      object-fit: cover;
+      display: block;
+      background: var(--surface);
+    }
+
+    .game-thumb-placeholder {
+      width: 100%;
+      aspect-ratio: 16/9;
+      background: var(--surface);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 3rem;
+    }
+
+    .game-info {
+      padding: 1rem;
+    }
+
+    .game-tag {
+      font-size: 0.6rem;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: var(--accent3);
+      margin-bottom: 0.4rem;
+    }
+
+    .game-title {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 1.3rem;
+      letter-spacing: 2px;
+      color: var(--text);
+      margin-bottom: 0.4rem;
+    }
+
+    .game-desc {
+      font-size: 0.65rem;
+      color: #8888aa;
+      line-height: 1.6;
+    }
+
+    .play-btn {
+      display: inline-block;
+      margin-top: 0.8rem;
+      background: var(--accent);
+      color: var(--bg);
+      font-family: 'Space Mono', monospace;
+      font-size: 0.65rem;
+      font-weight: 700;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      padding: 0.4rem 0.9rem;
+      border-radius: 2px;
+      text-decoration: none;
+      transition: background 0.2s;
+    }
+
+    .play-btn:hover { background: var(--accent2); color: #fff; }
+
+    /* ── SIDEBAR ADS ── */
+    .sidebar {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+
+    .sidebar .ad-placeholder {
+      width: 160px;
+      height: 600px;
+    }
+
+    /* ── FOOTER ── */
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 2rem;
+      text-align: center;
+      font-size: 0.65rem;
+      color: #444466;
+      letter-spacing: 2px;
+    }
+
+    footer a { color: #666688; text-decoration: none; }
+    footer a:hover { color: var(--accent); }
+
+    /* ── SECTION TITLE ── */
+    .section-title {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 1.5rem;
+      letter-spacing: 4px;
+      color: var(--text);
+      margin-bottom: 1.5rem;
+      padding-bottom: 0.5rem;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .section-title span { color: var(--accent); }
+  </style>
+</head>
+<body>
+
+  <!-- TOP AD BANNER -->
+  <div class="ad-banner">
+    <!-- ADSENSE: Replace this comment with your AdSense leaderboard (728x90) code -->
+    <div class="ad-placeholder" style="height:90px; max-width:728px; margin:0 auto;">
+      [ AD SPACE — 728×90 ]
+    </div>
+  </div>
+
+  <!-- HEADER -->
+  <header>
+    <div class="logo">ARCADE<span>ZONE</span></div>
+    <nav>
+      <a href="index.html">Home</a>
+      <a href="#action">Action</a>
+      <a href="#puzzle">Puzzle</a>
+      <a href="#arcade">Arcade</a>
+    </nav>
+  </header>
+
+  <!-- HERO -->
+  <div class="hero">
+    <div class="hero-label">// Free Online Games //</div>
+    <h1>PLAY NOW</h1>
+    <p>No downloads. No signups. Just games.</p>
+  </div>
+
+  <!-- CATEGORY FILTERS -->
+  <div class="filters">
+    <button class="filter-btn active">All Games</button>
+    <button class="filter-btn">Action</button>
+    <button class="filter-btn">Puzzle</button>
+    <button class="filter-btn">Arcade</button>
+    <button class="filter-btn">Strategy</button>
+  </div>
+
+  <!-- MAIN CONTENT -->
+  <div class="main-layout">
+    <div>
+      <div class="section-title">FEATURED <span>GAMES</span></div>
+
+      <div class="games-grid">
+
+        <!-- ==============================
+             GAME CARD 1
+             Replace href with your game page
+             Replace emoji with a real screenshot <img>
+        ================================= -->
+        <a class="game-card" href="games/game1/index.html">
+          <div class="game-thumb-placeholder">🐍</div>
+          <div class="game-info">
+            <div class="game-tag">Arcade</div>
+            <div class="game-title">Snake Classic</div>
+            <div class="game-desc">Eat, grow, don't crash. The timeless classic.</div>
+            <span class="play-btn">▶ Play</span>
+          </div>
+        </a>
+
+        <!-- GAME CARD 2 -->
+        <a class="game-card" href="games/game2/index.html">
+          <div class="game-thumb-placeholder">🧱</div>
+          <div class="game-info">
+            <div class="game-tag">Puzzle</div>
+            <div class="game-title">Block Breaker</div>
+            <div class="game-desc">Smash all the bricks before time runs out.</div>
+            <span class="play-btn">▶ Play</span>
+          </div>
+        </a>
+
+        <!-- GAME CARD 3 -->
+        <a class="game-card" href="games/game3/index.html">
+          <div class="game-thumb-placeholder">🚀</div>
+          <div class="game-info">
+            <div class="game-tag">Action</div>
+            <div class="game-title">Space Shooter</div>
+            <div class="game-desc">Blast through waves of alien invaders.</div>
+            <span class="play-btn">▶ Play</span>
+          </div>
+        </a>
+
+        <!-- GAME CARD 4 -->
+        <a class="game-card" href="games/game4/index.html">
+          <div class="game-thumb-placeholder">🃏</div>
+          <div class="game-info">
+            <div class="game-tag">Strategy</div>
+            <div class="game-title">Memory Match</div>
+            <div class="game-desc">Flip cards and test your memory skills.</div>
+            <span class="play-btn">▶ Play</span>
+          </div>
+        </a>
+
+        <!-- GAME CARD 5 -->
+        <a class="game-card" href="games/game5/index.html">
+          <div class="game-thumb-placeholder">🏓</div>
+          <div class="game-info">
+            <div class="game-tag">Arcade</div>
+            <div class="game-title">Pong Duel</div>
+            <div class="game-desc">The original 2-player paddle battle.</div>
+            <span class="play-btn">▶ Play</span>
+          </div>
+        </a>
+
+        <!-- GAME CARD 6 -->
+        <a class="game-card" href="games/game6/index.html">
+          <div class="game-thumb-placeholder">💣</div>
+          <div class="game-info">
+            <div class="game-tag">Puzzle</div>
+            <div class="game-title">Mine Sweep</div>
+            <div class="game-desc">Clear the field without hitting a mine.</div>
+            <span class="play-btn">▶ Play</span>
+          </div>
+        </a>
+
+      </div>
+    </div>
+
+    <!-- SIDEBAR -->
+    <div class="sidebar">
+      <!-- ADSENSE: Replace with your AdSense vertical (160x600) code -->
+      <div class="ad-placeholder" style="width:160px; height:600px;">
+        [ AD<br>160×600 ]
+      </div>
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <footer>
+    <p>© 2025 ARCADEZONE &nbsp;·&nbsp; <a href="#">Privacy Policy</a> &nbsp;·&nbsp; <a href="#">Contact</a></p>
+    <p style="margin-top:0.5rem">All games are hosted and owned by their respective creators.</p>
+  </footer>
+
+</body>
+</html>
