@@ -78,7 +78,7 @@
           title="Survival Race">
         </iframe>
       </div>
-      <button class="fullscreen-btn" onclick="goFullscreen()">⛶ FULLSCREEN</button>
+      <button class="fullscreen-btn" onclick="goFullscreen()">⛶ USE IN-GAME FULLSCREEN (BOTTOM RIGHT OF GAME)</button>
       <div class="mid-ad">
         <div class="ad-placeholder" style="height:280px;max-width:336px;margin:0 auto;">[ AD SPACE — 336×280 ]</div>
       </div>
@@ -101,16 +101,7 @@
   </footer>
  <script>
   function goFullscreen() {
-    const iframe = document.getElementById('gameFrame');
-    // Try to click their own fullscreen button inside the iframe
-    try {
-      const btn = iframe.contentDocument.querySelector('[class*="fullscreen"], [id*="fullscreen"], button:last-child');
-      if (btn) { btn.click(); return; }
-    } catch(e) {}
-    // Fallback: fullscreen the wrapper
-    const wrapper = document.querySelector('.game-crop-wrapper');
-    if (wrapper.requestFullscreen) wrapper.requestFullscreen();
-    else if (wrapper.webkitRequestFullscreen) wrapper.webkitRequestFullscreen();
+    alert('Click the fullscreen icon inside the game bar at the bottom of the game!');
   }
 </script>
 
