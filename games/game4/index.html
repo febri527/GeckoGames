@@ -22,8 +22,28 @@
     .game-header { margin-bottom:1rem; }
     .game-tag { font-size:0.6rem; letter-spacing:2px; text-transform:uppercase; color:var(--accent3); margin-bottom:0.4rem; }
     .game-title { font-family:'Bebas Neue',sans-serif; font-size:2.5rem; letter-spacing:4px; color:var(--text); }
-    .game-frame-wrapper { width:100%; aspect-ratio:16/9; background:#000; border:2px solid var(--border); border-radius:4px; overflow:hidden; }
-    .game-frame-wrapper iframe { width:100%; height:100%; border:none; display:block; }
+
+    /* CROPPED IFRAME WRAPPER */
+    .game-crop-wrapper {
+      width: 100%;
+      aspect-ratio: 16/9;
+      border: 2px solid var(--border);
+      border-radius: 4px;
+      overflow: hidden;
+      position: relative;
+    }
+    .game-crop-wrapper iframe {
+      /* Load the full page but shift and scale to show only the game */
+      position: absolute;
+      top: -130px;    /* push up to hide their header */
+      left: -280px;   /* push left to hide their sidebar */
+      width: 1400px;  /* make iframe wider than container */
+      height: 900px;  /* make iframe taller than container */
+      border: none;
+      transform-origin: top left;
+      pointer-events: all;
+    }
+
     .fullscreen-btn { display:block; width:100%; margin-top:0.6rem; background:var(--card); border:1px solid var(--border); color:var(--text); font-family:'Space Mono',monospace; font-size:0.65rem; letter-spacing:2px; text-transform:uppercase; padding:0.6rem; cursor:pointer; transition:all 0.2s; border-radius:2px; text-align:center; }
     .fullscreen-btn:hover { background:var(--accent); color:var(--bg); border-color:var(--accent); }
     .mid-ad { margin:1.5rem 0; text-align:center; }
@@ -54,21 +74,28 @@
         <div class="game-tag">Racing</div>
         <div class="game-title">SURVIVAL RACE</div>
       </div>
-      <div class="game-frame-wrapper">
-        <iframe id="gameFrame" src="https://slopeplay.github.io/games/survival-race/"></iframe>
+
+      <div class="game-crop-wrapper">
+        <iframe
+          id="gameFrame"
+          src="https://slopeplay.github.io/games/survival-race/"
+          scrolling="no"
+          title="Survival Race">
+        </iframe>
       </div>
+
       <button class="fullscreen-btn" onclick="goFullscreen()">⛶ FULLSCREEN</button>
+
       <div class="mid-ad">
         <div class="ad-placeholder" style="height:280px;max-width:336px;margin:0 auto;">[ AD SPACE — 336×280 ]</div>
       </div>
       <div class="game-desc-section">
         <h2>ABOUT THIS GAME</h2>
-        <p>Race through deadly tracks packed with obstacles, traps and wild jumps. Stay alive as long as you can and beat your best score!</p>
+        <p>Race on a collapsing hexagonal arena! Dodge falling platforms, push opponents off the edge, and be the last racer standing!</p>
         <div class="controls">
           <h3>Controls</h3>
-          <div class="control-row"><span class="key">↑</span> Accelerate</div>
-          <div class="control-row"><span class="key">←</span><span class="key">→</span> Tilt car</div>
-          <div class="control-row"><span class="key">↓</span> Brake</div>
+          <div class="control-row"><span class="key">←</span><span class="key">→</span> Steer</div>
+          <div class="control-row"><span class="key">Space</span> Jump</div>
         </div>
       </div>
     </div>
