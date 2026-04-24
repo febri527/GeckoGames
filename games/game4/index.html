@@ -35,8 +35,8 @@
     .game-crop-wrapper iframe {
       /* Load the full page but shift and scale to show only the game */
       position: absolute;
-      top: -1000px;    /* push up to hide their header */
-      left: -700px;   /* push left to hide their sidebar */
+      top: -500px;    /* push up to hide their header */
+      left: -490px;   /* push left to hide their sidebar */
       width: 1600px;  /* make iframe wider than container */
       height: 1200px;  /* make iframe taller than container */
       border: none;
@@ -108,9 +108,9 @@
   </footer>
   <script>
     function goFullscreen() {
-      const frame = document.getElementById('gameFrame');
-      if (frame.requestFullscreen) frame.requestFullscreen();
-      else if (frame.webkitRequestFullscreen) frame.webkitRequestFullscreen();
+  const wrapper = document.querySelector('.game-crop-wrapper');
+  if (wrapper.requestFullscreen) wrapper.requestFullscreen();
+  else if (wrapper.webkitRequestFullscreen) wrapper.webkitRequestFullscreen();
     }
   </script>
 </body>
