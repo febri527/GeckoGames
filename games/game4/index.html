@@ -29,11 +29,15 @@
       border-radius: 4px;
       overflow: hidden;
       position: relative;
-      background: #000;
     }
     .game-crop-wrapper iframe {
       position: absolute;
+      top: -930px;
+      left: -238px;
+      width: 1600px;
+      height: 1500px;
       border: none;
+      transform-origin: top left;
       pointer-events: all;
     }
     .fullscreen-btn { display:block; width:100%; margin-top:0.6rem; background:var(--card); border:1px solid var(--border); color:var(--text); font-family:'Space Mono',monospace; font-size:0.65rem; letter-spacing:2px; text-transform:uppercase; padding:0.6rem; cursor:pointer; transition:all 0.2s; border-radius:2px; text-align:center; }
@@ -99,6 +103,7 @@
     const wrapper = document.querySelector('.game-crop-wrapper');
     const iframe = document.querySelector('.game-crop-wrapper iframe');
 
+    // These match your original working CSS values exactly
     const BASE = {
       top: -930,
       left: -238,
@@ -108,19 +113,24 @@
 
     function applyScale() {
       const isFS = document.fullscreenElement === wrapper || document.webkitFullscreenElement === wrapper;
-      const W = isFS ? window.screen.width : wrapper.offsetWidth;
-      const H = isFS ? window.screen.height : wrapper.offsetHeight;
 
-      const scaleX = W / BASE.width;
-      const scaleY = H / BASE.height;
-      const scale = Math.max(scaleX, scaleY);
-
-      iframe.style.width = BASE.width + 'px';
-      iframe.style.height = BASE.height + 'px';
-      iframe.style.transform = `scale(${scale})`;
-      iframe.style.transformOrigin = 'top left';
-      iframe.style.top = (BASE.top * scale) + 'px';
-      iframe.style.left = (BASE.left * scale) + 'px';
+      if (isFS) {
+        const W = window.screen.width;
+        const H = window.screen.height;
+        const scale = Math.max(W / BASE.width, H / BASE.height);
+        iframe.style.width = BASE.width + 'px';
+        iframe.style.height = BASE.height + 'px';
+        iframe.style.transform = `scale(${scale})`;
+        iframe.style.top = (BASE.top * scale) + 'px';
+        iframe.style.left = (BASE.left * scale) + 'px';
+      } else {
+        // Restore original CSS values when not fullscreen
+        iframe.style.width = BASE.width + 'px';
+        iframe.style.height = BASE.height + 'px';
+        iframe.style.transform = '';
+        iframe.style.top = BASE.top + 'px';
+        iframe.style.left = BASE.left + 'px';
+      }
     }
 
     function goFullscreen() {
@@ -131,8 +141,6 @@
 
     document.addEventListener('fullscreenchange', applyScale);
     document.addEventListener('webkitfullscreenchange', applyScale);
-    window.addEventListener('resize', applyScale);
-    window.addEventListener('load', applyScale);
   </script>
 </body>
 </html>
