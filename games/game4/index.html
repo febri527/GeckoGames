@@ -112,26 +112,31 @@
     };
 
     function applyScale() {
-      const isFS = document.fullscreenElement === wrapper || document.webkitFullscreenElement === wrapper;
+  const isFS = document.fullscreenElement === wrapper || document.webkitFullscreenElement === wrapper;
 
-      if (isFS) {
-        const W = window.screen.width;
-        const H = window.screen.height;
-        const scale = Math.max(W / BASE.width, H / BASE.height);
-        iframe.style.width = BASE.width + 'px';
-        iframe.style.height = BASE.height + 'px';
-        iframe.style.transform = `scale(${scale})`;
-        iframe.style.top = (BASE.top * scale) + 'px';
-        iframe.style.left = (BASE.left * scale) + 'px';
-      } else {
-        // Restore original CSS values when not fullscreen
-        iframe.style.width = BASE.width + 'px';
-        iframe.style.height = BASE.height + 'px';
-        iframe.style.transform = '';
-        iframe.style.top = BASE.top + 'px';
-        iframe.style.left = BASE.left + 'px';
-      }
-    }
+  if (isFS) {
+    const W = window.screen.width;
+    const H = window.screen.height;
+
+    // How much of the iframe is actually "visible game" in normal view
+    const visibleW = BASE.width + BASE.left; // 1600 + (-238) = 1362
+    const visibleH = BASE.height + BASE.top; // 1500 + (-930) = 570
+
+    const scale = Math.min(W / visibleW, H / visibleH);
+
+    iframe.style.width = BASE.width + 'px';
+    iframe.style.height = BASE.height + 'px';
+    iframe.style.transform = `scale(${scale})`;
+    iframe.style.top = (BASE.top * scale) + 'px';
+    iframe.style.left = (BASE.left * scale) + 'px';
+  } else {
+    iframe.style.width = BASE.width + 'px';
+    iframe.style.height = BASE.height + 'px';
+    iframe.style.transform = '';
+    iframe.style.top = BASE.top + 'px';
+    iframe.style.left = BASE.left + 'px';
+  }
+}
 
     function goFullscreen() {
       if (wrapper.requestFullscreen) wrapper.requestFullscreen();
