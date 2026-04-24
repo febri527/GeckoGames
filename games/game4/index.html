@@ -99,17 +99,20 @@
   <footer>
     <p>© 2025 GECKOGAMES &nbsp;·&nbsp; <a href="#">Privacy Policy</a> &nbsp;·&nbsp; <a href="#">Contact</a></p>
   </footer>
-  <script>
+ <script>
+  function goFullscreen() {
+    const iframe = document.getElementById('gameFrame');
+    // Try to click their own fullscreen button inside the iframe
+    try {
+      const btn = iframe.contentDocument.querySelector('[class*="fullscreen"], [id*="fullscreen"], button:last-child');
+      if (btn) { btn.click(); return; }
+    } catch(e) {}
+    // Fallback: fullscreen the wrapper
     const wrapper = document.querySelector('.game-crop-wrapper');
-    const iframe = document.querySelector('.game-crop-wrapper iframe');
-
-    // These match your original working CSS values exactly
-    const BASE = {
-      top: -930,
-      left: -238,
-      width: 1600,
-      height: 1500,
-    };
+    if (wrapper.requestFullscreen) wrapper.requestFullscreen();
+    else if (wrapper.webkitRequestFullscreen) wrapper.webkitRequestFullscreen();
+  }
+</script>
 
     function applyScale() {
   const isFS = document.fullscreenElement === wrapper || document.webkitFullscreenElement === wrapper;
