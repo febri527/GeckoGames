@@ -21,8 +21,8 @@
     .game-header { margin-bottom:1rem; }
     .game-tag { font-size:0.6rem; letter-spacing:2px; text-transform:uppercase; color:var(--accent3); margin-bottom:0.4rem; }
     .game-title { font-family:'Bebas Neue',sans-serif; font-size:2.5rem; letter-spacing:4px; color:var(--text); }
-    .game-crop-wrapper { width:100%; aspect-ratio:16/9; border:2px solid var(--border); border-radius:4px; overflow:hidden; position:relative; }
-    .game-crop-wrapper iframe { position:absolute; top:-80px; left:-180px; width:1200px; height:1400px; border:none; }
+    .game-frame-wrapper { width:100%; aspect-ratio:16/9; background:#000; border:2px solid var(--border); border-radius:4px; overflow:hidden; }
+    .game-frame-wrapper iframe { width:100%; height:100%; border:none; display:block; }
     .fullscreen-btn { display:block; width:100%; margin-top:0.6rem; background:var(--card); border:1px solid var(--border); color:var(--text); font-family:'Space Mono',monospace; font-size:0.65rem; letter-spacing:2px; text-transform:uppercase; padding:0.6rem; cursor:pointer; transition:all 0.2s; border-radius:2px; text-align:center; }
     .fullscreen-btn:hover { background:var(--accent); color:var(--bg); border-color:var(--accent); }
     .mid-ad { margin:1.5rem 0; text-align:center; }
@@ -53,10 +53,10 @@
         <div class="game-tag">Sports</div>
         <div class="game-title">SOCCER BROS</div>
       </div>
-      <div class="game-crop-wrapper" id="gameWrapper">
-        <iframe id="gameFrame" src="https://soccer-bros.github.io/" scrolling="no" title="Soccer Bros"></iframe>
+      <div class="game-frame-wrapper">
+        <iframe id="gameFrame" src="https://soccer-bros.github.io/" scrolling="no" allowfullscreen title="Soccer Bros"></iframe>
       </div>
-      <button class="fullscreen-btn" style="cursor:default; opacity:0.5;" disabled>⛶ USE THE FULLSCREEN BUTTON INSIDE THE GAME</button>
+      <button class="fullscreen-btn" onclick="goFullscreen()">⛶ FULLSCREEN</button>
       <div class="mid-ad">
         <div class="ad-placeholder" style="height:280px;max-width:336px;margin:0 auto;">[ AD SPACE — 336×280 ]</div>
       </div>
@@ -81,9 +81,9 @@
   </footer>
   <script>
     function goFullscreen() {
-      const wrapper = document.querySelector('.game-crop-wrapper');
-      if (wrapper.requestFullscreen) wrapper.requestFullscreen();
-      else if (wrapper.webkitRequestFullscreen) wrapper.webkitRequestFullscreen();
+      const frame = document.getElementById('gameFrame');
+      if (frame.requestFullscreen) frame.requestFullscreen();
+      else if (frame.webkitRequestFullscreen) frame.webkitRequestFullscreen();
     }
   </script>
 </body>
