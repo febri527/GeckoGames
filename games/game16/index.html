@@ -9,7 +9,6 @@
     :root { --bg:#0a0a0f; --surface:#12121a; --card:#1a1a26; --accent:#f0e040; --accent2:#ff3c6e; --accent3:#3cf0c8; --text:#e8e8f0; --border:#2a2a3a; }
     * { margin:0; padding:0; box-sizing:border-box; }
     body { background:var(--bg); color:var(--text); font-family:'Space Mono',monospace; min-height:100vh; }
-    body::before { content:''; position:fixed; inset:0; background:repeating-linear-gradient(0deg,transparent,transparent 2px,rgba(0,0,0,0.08) 2px,rgba(0,0,0,0.08) 4px); pointer-events:none; z-index:1000; }
     header { border-bottom:2px solid var(--accent); padding:0 2rem; display:flex; align-items:center; justify-content:space-between; height:70px; background:var(--bg); }
     .logo { font-family:'Bebas Neue',sans-serif; font-size:2rem; letter-spacing:4px; color:var(--accent); text-decoration:none; text-shadow:0 0 20px rgba(240,224,64,0.5); }
     .logo span { color:var(--accent2); }
@@ -23,7 +22,7 @@
     .game-tag { font-size:0.6rem; letter-spacing:2px; text-transform:uppercase; color:var(--accent3); margin-bottom:0.4rem; }
     .game-title { font-family:'Bebas Neue',sans-serif; font-size:2.5rem; letter-spacing:4px; color:var(--text); }
     .game-crop-wrapper { width:100%; aspect-ratio:16/9; border:2px solid var(--border); border-radius:4px; overflow:hidden; position:relative; }
-    .game-crop-wrapper iframe { position:absolute; top:-60px; left:-200px; width:1400px; height:900px; border:none; }
+    .game-crop-wrapper iframe { position:absolute; top:-65px; left:-190px; width:1400px; height:900px; border:none; }
     .fullscreen-btn { display:block; width:100%; margin-top:0.6rem; background:var(--card); border:1px solid var(--border); color:var(--text); font-family:'Space Mono',monospace; font-size:0.65rem; letter-spacing:2px; text-transform:uppercase; padding:0.6rem; cursor:pointer; transition:all 0.2s; border-radius:2px; text-align:center; }
     .fullscreen-btn:hover { background:var(--accent); color:var(--bg); border-color:var(--accent); }
     .mid-ad { margin:1.5rem 0; text-align:center; }
