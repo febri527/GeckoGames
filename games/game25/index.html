@@ -21,8 +21,8 @@
     .game-header { margin-bottom:1rem; }
     .game-tag { font-size:0.6rem; letter-spacing:2px; text-transform:uppercase; color:var(--accent3); margin-bottom:0.4rem; }
     .game-title { font-family:'Bebas Neue',sans-serif; font-size:2.5rem; letter-spacing:4px; color:var(--text); }
-    .game-frame-wrapper { width:100%; aspect-ratio:16/9; background:#000; border:2px solid var(--border); border-radius:4px; overflow:hidden; }
-    .game-frame-wrapper iframe { width:100%; height:100%; border:none; display:block; }
+    .game-crop-wrapper { width:100%; aspect-ratio:16/9; border:2px solid var(--border); border-radius:4px; overflow:hidden; position:relative; background:#000; }
+    .game-crop-wrapper iframe { position:absolute; top:-155px; left:0px; width:100%; height:1100px; border:none; pointer-events:all; }
     .fullscreen-btn { display:block; width:100%; margin-top:0.6rem; background:var(--card); border:1px solid var(--border); color:var(--text); font-family:'Space Mono',monospace; font-size:0.65rem; letter-spacing:2px; text-transform:uppercase; padding:0.6rem; cursor:pointer; transition:all 0.2s; border-radius:2px; text-align:center; }
     .fullscreen-btn:hover { background:var(--accent); color:var(--bg); border-color:var(--accent); }
     .mid-ad { margin:1.5rem 0; text-align:center; }
@@ -50,11 +50,11 @@
   <div class="game-page">
     <div>
       <div class="game-header">
-        <div class="game-tag">Skill</div>
+        <div class="game-tag">Viral</div>
         <div class="game-title">CRAZY CATTLE 3D</div>
       </div>
-      <div class="game-frame-wrapper">
-        <iframe id="gameFrame" src="https://genizymath.github.io/games/crazy-cattle-3d/" allowfullscreen title="Game Name" sandbox="allow-scripts allow-same-origin allow-pointer-lock allow-orientation-lock"></iframe>
+      <div class="game-crop-wrapper">
+        <iframe id="gameFrame" src="https://genizymath.github.io/games/crazy-cattle-3d/" scrolling="no" title="Crazy Cattle 3D"></iframe>
       </div>
       <button class="fullscreen-btn" onclick="goFullscreen()">⛶ FULLSCREEN</button>
       <div class="mid-ad">
@@ -62,11 +62,13 @@
       </div>
       <div class="game-desc-section">
         <h2>ABOUT THIS GAME</h2>
-        <p>DESCRIPTION HERE</p>
+        <p>Physics-based sheep battle royale! Knock all other sheep off the map using momentum and timing. No weapons, no upgrades — pure skill. The viral hit of 2025!</p>
         <div class="controls">
           <h3>Controls</h3>
-          <div class="control-row"><span class="key">KEY</span> Action</div>
-          <div class="control-row"><span class="key">KEY</span> Action</div>
+          <div class="control-row"><span class="key">WASD</span> Move</div>
+          <div class="control-row"><span class="key">Mouse</span> Steer direction</div>
+          <div class="control-row"><span class="key">Space</span> Bleat / restart</div>
+          <div class="control-row"><span class="key">P</span> Pause</div>
         </div>
       </div>
     </div>
@@ -79,9 +81,9 @@
   </footer>
   <script>
     function goFullscreen() {
-      const frame = document.getElementById('gameFrame');
-      if (frame.requestFullscreen) frame.requestFullscreen();
-      else if (frame.webkitRequestFullscreen) frame.webkitRequestFullscreen();
+      const wrapper = document.querySelector('.game-crop-wrapper');
+      if (wrapper.requestFullscreen) wrapper.requestFullscreen();
+      else if (wrapper.webkitRequestFullscreen) wrapper.webkitRequestFullscreen();
     }
   </script>
 </body>
